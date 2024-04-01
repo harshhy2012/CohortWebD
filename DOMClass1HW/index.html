@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        let timeout;
+        function debouncePopulateDiv(){
+             // delay next call by 100 ms until this fn has not been called
+             // and this function has been called atleast once.
+             clearTimeout(timeout);
+
+             timeout = setTimeout(() => {
+                populateDiv();
+            }, 2000);
+        }
+
+        async function populateDiv(){
+            const prin = document.getElementById('principal').value;
+            const rate = document.getElementById('rate').value;
+            const time = document.getElementById('time').value;
+
+            const reqToBE = await fetch(`http://localhost:3001/interest?principal=${prin}&rate=${rate}&time=${time}`, {method: 'POST'});
+            const ansJSON = await reqToBE.json();
+            
+            const element = document.getElementById('finAns');
+            element.innerHTML = `Total: ${ansJSON.total}, Interest: ${ansJSON.interest}`;
+        }
+    </script>
+</head>
+<body>
+    <form action="">
+        
+            <input oninput="debouncePopulateDiv()" id="principal" type="text" name="principal" id="" placeholder="Enter a number">
+        
+        <br>
+        <br>
+
+            <input oninput="debouncePopulateDiv()" id="rate" type="text" name="rate" id="" placeholder="Enter a number">
+    
+        <br>
+        <br>
+
+            <input oninput="debouncePopulateDiv()" id="time" type="text" name="time" id="" placeholder="Enter a number">
+        <br>
+        <br>
+            
+        <div id="finAns">
+            
+        </div>
+
+    </form>
+</body>
+</html>

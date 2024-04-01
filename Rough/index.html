@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        let timeout;
+        function debouncePopulateDiv(){
+             // delay next call by 100 ms until this fn has not been called
+             // and this function has been called atleast once.
+             clearTimeout(timeout);
+
+             timeout = setTimeout(() => {
+                populateDiv();
+            }, 1000);
+        }
+
+        function populateDiv(){
+            const num1 = document.getElementById('num1').value;
+            const num2 = document.getElementById('num2').value;
+            const element = document.getElementById('finSum');
+            console.log(element); 
+            element.innerHTML = parseInt(num1)+parseInt(num2);
+        }
+    </script>
+</head>
+<body>
+    <form action="">
+        
+            <input oninput="debouncePopulateDiv()" id="num1" type="text" name="" id="" placeholder="Enter a number">
+        
+        <br>
+        <br>
+
+            <input oninput="debouncePopulateDiv()" id="num2" type="text" name="" id="" placeholder="Enter a number">
+    
+        <br>
+        <br>
+        
+            <button onclick="populateDiv()" type="button">Add</button>
+        
+        <div id="finSum">
+            
+        </div>
+
+    </form>
+</body>
+</html>
